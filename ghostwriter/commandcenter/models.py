@@ -1,5 +1,6 @@
 """This contains all the database models for the CommandCenter application."""
 
+import json
 from typing import Any, Callable, NamedTuple
 from django import forms
 
@@ -372,6 +373,13 @@ EXTRA_FIELD_TYPES = {
         form_widget=forms.widgets.NumberInput,
         from_str=float,
         empty_value=lambda: 0.0,
+    ),
+    "json": ExtraFieldType(
+        display_name="JSON",
+        form_field=lambda *args, **kwargs: forms.JSONField(required=False, *args, **kwargs),
+        form_widget=lambda: forms.widgets.Textarea(attrs={"class": "no-auto-tinymce"}),
+        from_str=json.loads,
+        empty_value=lambda: None,
     ),
 }
 

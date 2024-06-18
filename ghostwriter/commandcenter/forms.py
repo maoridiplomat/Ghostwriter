@@ -132,10 +132,12 @@ class ExtraFieldsWidget(forms.Widget):
             else:
                 widget_attrs = final_attrs
 
-            # Adjust classes for fields here
+            widget_attrs.setdefault("class", "")
             # Append `mb3` to the class list to add a margin below the field
-            if "class" in widget_attrs:
-                widget_attrs["class"] = widget_attrs["class"] + " mb-3"
+            widget_attrs["class"] += " mb-3"
+            # Add any classes from the widget
+            if "class" in widget.attrs:
+                widget_attrs["class"] += " " + widget.attrs["class"]
 
             widget_ctx = widget.get_context(widget_name, widget_value, widget_attrs)["widget"]
 
